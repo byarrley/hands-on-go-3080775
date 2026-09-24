@@ -8,6 +8,10 @@ import "fmt"
 - 6. local val isn't a pointer, but the sample output shows a reference
 - 7. is making me think that 2. was supposed to create a pointer, then work with that
 - ...I made 'local val' a pointer (although the instructor hasn't demonstrated use of the "new" keyword yet)
+
+Solution:
+- local val was just a simple int
+- and...he basically implemented what I had originally before I started analyzing the challenge.md
 */
 
 // use type inference to create a package-level variable "val" and assign it a value of "global"
