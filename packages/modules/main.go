@@ -6,6 +6,7 @@ import (
 	"github.com/jboursiquot/go-proverbs"
 )
 
+// Task: see challenge.md
 func main() {
 	p, err := proverbs.Nth(4)
 	if err != nil {
