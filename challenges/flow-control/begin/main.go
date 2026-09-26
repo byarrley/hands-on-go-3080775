@@ -14,6 +14,9 @@ import (
 Task: see challenge.md
 Notes:
 - I ended up using regex instead of a switch statement to check the type of each character for the initial implementation
+Solution:
+- The instructor used the unicode package, but used "IsNumber" vice "IsDigit"
+- He also used an "if/else if/else" block instead of a switch, and counted anything in the "else" block as a "symbol"
 */
 
 func main() {
@@ -56,7 +59,7 @@ func main() {
 			switch {
 			case unicode.IsLetter(c):
 				counts["letters"]++
-			case unicode.IsDigit(c):
+			case unicode.IsNumber(c):
 				counts["numbers"]++
 			case unicode.IsSymbol(c), unicode.IsPunct(c):
 				counts["symbols"]++
