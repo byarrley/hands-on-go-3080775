@@ -4,8 +4,8 @@ package main
 import (
 	"fmt"
 	"os"
-	"regexp"
 	"strings"
+	"unicode"
 
 	"github.com/davecgh/go-spew/spew"
 )
@@ -51,23 +51,17 @@ func main() {
 	counts["words"] = len(words)
 
 	// use for-range to iterate over the words slice and for each word, count the number of letters, numbers, and symbols, storing them in the map
-	counts["letters"] = regexCount(`[[:alpha:]]`, contents)
-	counts["numbers"] = regexCount(`[[:digit:]]`, contents)
-	counts["symbols"] = regexCount("[!-/:-@[-`{-~]", contents)
-	// dump the map to the console using the spew package
-	spew.Dump(counts)
-}
-
-func regexCount(exp string, s string) int {
-	result := 0
-	re := regexp.MustCompile(exp)
-
-	matches := re.FindAllString(s, -1)
-	fmt.Printf("\nre=%#v\n", re)
-	fmt.Printf("s=%#v\n", s)
-	fmt.Printf("matches=%q\n", matches)
-	for _, m := range matches {
-		result += len(m)
+	for _, w := range words {
+		for _, c := range w {
+			switch {
+			case unicode.IsLetter(c):
+				counts["letters"]++
+			case unicode.IsDigit(c):
+				counts["numbers"]++
+			case unicode.IsSymbol(c), unicode.IsPunct(c):
+				counts["symbols"]++
+			}
+		}
 	}
-	return result
+	spew.Dump(counts)
 }
