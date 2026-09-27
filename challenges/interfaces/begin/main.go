@@ -30,6 +30,10 @@ Output:
 	}
 
 Which gives us 2296 bytes.
+
+Solution:
+- Instructor made the same mistake I made by counting "symbols" as "!letters" and "!numbers", which would count spaces
+(since we're operating on the full string, and not individual words).  Note: "symbols" + "spaces" = 510, which is the same as the expected number of "symbols"
 */
 type counter interface {
 	name() string
