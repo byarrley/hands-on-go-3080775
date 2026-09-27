@@ -13,9 +13,23 @@ import (
 /*
 Task: See challenge.md
 Notes:
-- I think we can reuse the unicode filters from the previous challenge for the implementation of "count"
-- The expected output for this challenge doesn't match the expected output for the previous challenge, despite what the text says
-- Assuming that the input data is still challenges/data.txt, I think there is an issue with the expected output for this challenge.
+  - I think we can reuse the unicode filters from the previous challenge for the implementation of "count"
+  - The expected output for this challenge doesn't match the expected output for the previous challenge, despite what the text says
+  - Assuming that the input data is still challenges/data.txt, I think there is an issue with the expected output for this challenge.
+  - 'wc ../../data.txt' returns '0  427 2296 ../../data.txt'; if we add a type for counting whitespace, the total number of bytes shouldn't exceed 2296
+    (which the expected output does, there's some double counting or some other error)
+
+Output:
+
+	(map[string]int) (len=5) {
+	 (string) (len=5) "words": (int) 427,
+	 (string) (len=7) "letters": (int) 1784,
+	 (string) (len=7) "numbers": (int) 2,
+	 (string) (len=7) "symbols": (int) 84,
+	 (string) (len=6) "spaces": (int) 426
+	}
+
+Which gives us 2296 bytes.
 */
 type counter interface {
 	name() string
@@ -67,6 +81,21 @@ func (s symbolCounter) count(input string) int {
 	return result
 }
 
+type whitespaceCounter struct{ etiqueta string }
+
+func (w whitespaceCounter) name() string {
+	return w.etiqueta
+}
+func (w whitespaceCounter) count(input string) int {
+	result := 0
+	for _, c := range input {
+		if unicode.IsSpace(c) {
+			result++
+		}
+	}
+	return result
+}
+
 func doAnalysis(data string, counters ...counter) map[string]int {
 	// initialize a map to store the counts
 	analysis := make(map[string]int)
@@ -106,6 +135,7 @@ func main() {
 		letterCounter{identifier: "letters"},
 		numberCounter{designation: "numbers"},
 		symbolCounter{label: "symbols"},
+		whitespaceCounter{etiqueta: "spaces"},
 	)
 	// dump the map to the console using the spew package
 	spew.Dump(analysis)
