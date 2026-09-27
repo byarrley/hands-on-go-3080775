@@ -5,10 +5,18 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"unicode"
 
 	"github.com/davecgh/go-spew/spew"
 )
 
+/*
+Task: See challenge.md
+Notes:
+- I think we can reuse the unicode filters from the previous challenge for the implementation of "count"
+- The expected output for this challenge doesn't match the expected output for the previous challenge, despite what the text says
+- Assuming that the input data is still challenges/data.txt, I think there is an issue with the expected output for this challenge.
+*/
 type counter interface {
 	name() string
 	count(input string) int
@@ -16,9 +24,48 @@ type counter interface {
 
 type letterCounter struct{ identifier string }
 
+func (l letterCounter) name() string {
+	return l.identifier
+}
+func (l letterCounter) count(input string) int {
+	result := 0
+	for _, c := range input {
+		if unicode.IsLetter(c) {
+			result++
+		}
+	}
+	return result
+}
+
 type numberCounter struct{ designation string }
 
+func (n numberCounter) name() string {
+	return n.designation
+}
+func (n numberCounter) count(input string) int {
+	result := 0
+	for _, c := range input {
+		if unicode.IsNumber(c) {
+			result++
+		}
+	}
+	return result
+}
+
 type symbolCounter struct{ label string }
+
+func (s symbolCounter) name() string {
+	return s.label
+}
+func (s symbolCounter) count(input string) int {
+	result := 0
+	for _, c := range input {
+		if unicode.IsSymbol(c) || unicode.IsPunct(c) {
+			result++
+		}
+	}
+	return result
+}
 
 func doAnalysis(data string, counters ...counter) map[string]int {
 	// initialize a map to store the counts
@@ -52,10 +99,14 @@ func main() {
 
 	// convert the bytes to a string
 	data := string(bs)
-	spew.Dump(data)
+	// spew.Dump(data)
 
 	// call doAnalysis and pass in the data and the counters
-
+	analysis := doAnalysis(data,
+		letterCounter{identifier: "letters"},
+		numberCounter{designation: "numbers"},
+		symbolCounter{label: "symbols"},
+	)
 	// dump the map to the console using the spew package
-	// spew.Dump(analysis)
+	spew.Dump(analysis)
 }
