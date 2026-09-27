@@ -11,6 +11,8 @@ import (
 - See challenges.md
 - Hints
 * Task 2: the 'constraints' package can help
+Solution:
+- printAny: Instructor used a constraint of 'any' (which makes sense, given the function name)
 */
 // Part 1: print function refactoring
 
