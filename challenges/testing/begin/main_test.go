@@ -1,12 +1,39 @@
 // challenges/testing/begin/main_test.go
 package main
 
+import "testing"
+
 /*
 Task:
 - see challenge.md
 - symbolCounter uses the buggy version of the function
 */
+
+type testCase struct {
+	name string
+	in   string
+	want int
+}
+
 // write a test for letterCounter.count
+func TestLetterCount(t *testing.T) {
+	l := letterCounter{identifier: "letters"}
+	tcs := []testCase{
+		{name: "#00", in: "#00", want: 0},
+		{name: "a2_32_^_&/)", in: "a2_32_^_&/)", want: 1},
+		{name: "812_%6ab//", in: "812_%6ab//", want: 2},
+	}
+
+	for _, tc := range tcs {
+		t.Run(tc.in, func(t *testing.T) {
+			got := l.count(tc.in)
+			if got != tc.want {
+				t.Errorf("Want %d, got %d", tc.want, got)
+			}
+		})
+
+	}
+}
 
 // write a test for numberCounter.count
 
