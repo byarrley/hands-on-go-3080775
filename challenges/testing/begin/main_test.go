@@ -7,6 +7,11 @@ import "testing"
 Task:
 - see challenge.md
 - symbolCounter uses the buggy version of the function
+Notes:
+- If the "counter" interface still existed, this might've
+	had a single test, run over a loop of counters using the
+	same set of test cases
+	(or maybe a map of types to specialized test cases)
 */
 
 type testCase struct {
