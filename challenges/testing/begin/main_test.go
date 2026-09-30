@@ -40,5 +40,22 @@ func TestLetterCount(t *testing.T) {
 }
 
 // write a test for numberCounter.count
+func TestNumberCount(t *testing.T) {
+	c := numberCounter{designation: "numbers"}
+	tcs := []testCase{
+		{name: "#00", in: "#00", want: 2},
+		{name: "abc_1,?/", in: "abc_1,?/", want: 1},
+		{name: "abc_12&8_^", in: "abc_12&8_^", want: 3},
+	}
+
+	for _, tc := range tcs {
+		t.Run(tc.in, func(t *testing.T) {
+			got := c.count(tc.in)
+			if got != tc.want {
+				t.Errorf("Want %d, got %d", tc.want, got)
+			}
+		})
+	}
+}
 
 // write a test for symbolCounter.count
