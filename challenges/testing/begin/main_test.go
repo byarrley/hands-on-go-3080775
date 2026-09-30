@@ -22,7 +22,7 @@ type testCase struct {
 
 // write a test for letterCounter.count
 func TestLetterCount(t *testing.T) {
-	l := letterCounter{identifier: "letters"}
+	c := letterCounter{identifier: "letters"}
 	tcs := []testCase{
 		{name: "#00", in: "#00", want: 0},
 		{name: "a2_32_^_&/)", in: "a2_32_^_&/)", want: 1},
@@ -31,12 +31,11 @@ func TestLetterCount(t *testing.T) {
 
 	for _, tc := range tcs {
 		t.Run(tc.in, func(t *testing.T) {
-			got := l.count(tc.in)
+			got := c.count(tc.in)
 			if got != tc.want {
 				t.Errorf("Want %d, got %d", tc.want, got)
 			}
 		})
-
 	}
 }
 
