@@ -6,12 +6,17 @@ import (
 	"math/rand"
 	"os"
 	"strings"
+	"sync"
 	"time"
 	"unicode"
 
 	"github.com/davecgh/go-spew/spew"
 )
 
+/*
+Task: see challenges.md
+Notes:
+*/
 var random *rand.Rand
 
 func init() {
@@ -78,6 +83,8 @@ func (s symbolCounter) count(input string) int {
 }
 
 func doAnalysis(data string, counters ...counter) map[string]int {
+	var wg sync.WaitGroup
+	var mux sync.Mutex
 	// initialize a map to store the counts
 	analysis := make(map[string]int)
 
@@ -86,9 +93,14 @@ func doAnalysis(data string, counters ...counter) map[string]int {
 
 	// loop over the counters and use their name as the key
 	for _, c := range counters {
-		analysis[c.name()] = c.count(data)
+		wg.Go(func() {
+			mux.Lock()
+			defer mux.Unlock()
+			analysis[c.name()] = c.count(data)
+		})
 	}
 
+	wg.Wait()
 	// return the map
 	return analysis
 }
