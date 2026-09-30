@@ -12,6 +12,13 @@ Notes:
 	had a single test, run over a loop of counters using the
 	same set of test cases
 	(or maybe a map of types to specialized test cases)
+Solution notes:
+- I missed the "empty" case
+- No need to set the identifier/designation/label fields in the counters (they're unused, so can be the zero value)
+- The input name shown in the challenge.md's sample output doesn't match the actual inputs in the code (no underscores in the code)
+- "#00" isn't a case for letterCount, seems like that's what's printed as the name for the zero value of string
+- I'm leaving the "name" field for testCase, even though the instructor used the input itself
+
 */
 
 type testCase struct {
