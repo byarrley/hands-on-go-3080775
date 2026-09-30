@@ -16,6 +16,8 @@ import (
 /*
 Task: see challenges.md
 Notes:
+Solution notes:
+-
 */
 var random *rand.Rand
 
